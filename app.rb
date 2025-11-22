@@ -35,5 +35,5 @@ get /.*/ do
 end
 
 post /.*/ do
-  halt 404, 'not found' unless route
+  halt 404, 'not found'
 end

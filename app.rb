@@ -19,6 +19,8 @@ end
 get '/' do
   route = ROUTING_TABLE['/'][request.query_string]
 
+  halt 404, 'not found' unless route
+
   send_file Pathname.new('.').join(ARCHIVE_PATH, route['host'], route['file_id'], 'index.html')
 end
 

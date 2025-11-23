@@ -21,8 +21,9 @@ ROUTING_TABLE.freeze
 DISCLAIMER = File.read(Pathname.new(__dir__).join('disclaimer.html')).freeze
 
 get '/' do
-  route = ROUTING_TABLE['/'][request.query_string]
+  redirect to('/'), 308 unless params.all? { |(k, _)| k == 'p' || k == 'id' }
 
+  route = ROUTING_TABLE['/'][request.query_string]
   halt 404, 'not found' unless route
 
   File.read(Pathname.new('.').join(ARCHIVE_PATH, route['host'], route['file_id'], 'index.html'))

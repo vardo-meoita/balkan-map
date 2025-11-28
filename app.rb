@@ -30,6 +30,15 @@ get '/' do
     .gsub('<div id="map', "#{DISCLAIMER}<div id=\"map")
 end
 
+get '/sitemap.txt' do
+  content_type :text
+  ROUTING_TABLE.flat_map do |(file, queries)|
+    queries.map do |(query, _)|
+      [request.scheme, '://', request.host, file, query == '' ? '' : "?#{query}"].join
+    end
+  end.join("\n")
+end
+
 get '/health' do
   'OK'
 end
